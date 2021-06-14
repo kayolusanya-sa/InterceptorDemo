@@ -1,45 +1,22 @@
 spring:
   application:
     name: sainsburys.applications.sc-is.location-supplier-acl
-    envVariableName: kafkaSecretsKey
-    storename: location-supplier-store_ver1
-    timewindow: 604800000
-    batchSize: 10
-    aggregatorCron: 0/10 * * * * ? #0 0 * * * *
-    deduplicatorOutputTopic: sainsburys.data.location.supplier.v1
-    batchTimeLimit: 60
-    aggregatorStoreName: location-supplier-store-agg_ver1
   cloud:
     stream:
       function:
-        definition: sendTestData;process;concatFn
+        definition: sendTestData;concatFn
       bindings:
-        process-in-0:
-          destination: dataIn
-          binder: kafka1
-          consumer:
-            concurrency: 4
-            deserializationExceptionHandler: sendToDlq
-            dlqName: sainsburys.applications.sc-dis.location.supplier.dedupe.error.v1
-        process-out-0:
-          destination: dataOut
-          binder: kafka2
-          producer:
-            concurrency: 4
         #Test source binding (used for testing)
         sendTestData-out-0:
           destination: dataIn
           binder: kafka1
         concatFn-in-0:
-          destination: dataOut
+          destination: dataIn
           binder: kafka3
           consumer:
             concurrency: 4
             useNativeDecoding: false
             spring.json.trusted.packages: 'multibinder'
-            default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-            default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
-            spring.json.value.default.type: multibinder.PriceSpecificationSource
             commit.interval.ms: 1000
         concatFn-out-0:
           destination: concatOut
@@ -47,25 +24,8 @@ spring:
           producer:
             concurrency: 4
             useNativeDecoding: false
-            keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
-            valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
       binders:
         kafka1:
-          type: kafka
-          environment:
-            spring:
-              cloud:
-                stream:
-                  kafka:
-                    binder:
-                      brokers: ${kafkaBroker1}
-                      minPartitionCount: 4
-                      configuration:
-                        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                        default.value.serde: org.springframework.kafka.support.serializer.JsonSerde
-                        spring.json.value.default.type: multibinder.PriceSpecificationSource
-                        commit.interval.ms: 1000
-        kafka2:
           type: kafka
           environment:
             spring:
@@ -93,11 +53,9 @@ spring:
                         applicationId: multi-binder-kafka-streams
                         minPartitionCount: 4
                         configuration:
-                          default.production.exception.handler: multibinder.exception.DeDuplicatorExceptionHandler
                           spring.json.trusted.packages: '*'
                           commit.interval.ms: 765
                           acks: all
-                          schema.registry.url: http://localhost:8081
                           max.poll.records: 1000
                           replication.factor: 1
                           allow.auto.create.topics: true
@@ -106,7 +64,7 @@ spring:
                           linger.ms: 300
                           default:
                             key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                            value.serde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+                            value.serde: org.springframework.kafka.support.serializer.JsonSerde
                             consumer.enabledlq: true
 
 
