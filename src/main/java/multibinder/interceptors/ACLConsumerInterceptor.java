@@ -27,7 +27,7 @@ public class ACLConsumerInterceptor <K, V> implements ConsumerInterceptor<String
             if (record.topic().equals(LOCATION_SUPPLIER_SOURCE)) {
                 log.info("---<< setting timestamp for  >>---");
                 String key = record.key();
-                System.out.printf("Received Message: timestamp =%s, partition =%s, offset = %d, key = %s, value = %s\n",
+                log.info("Received Message: timestamp ={}}, partition ={}}, offset = {}}, key = {}}, value = {}}\n",
                         record.timestamp(), record.partition(), record.offset(), record.key(), record.value().getClass().getName());
             }
         }
