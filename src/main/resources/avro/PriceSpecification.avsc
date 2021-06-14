@@ -1,0 +1,219 @@
+{
+    "type": "record",
+    "name": "PriceSpecification",
+    "namespace": "uk.co.sainsburys.supplychain.integrationservices.model.generated.pricespecification",
+    "doc": "Schema for price specification.",
+    "fields": [
+        {
+            "name": "itemId",
+            "type": "string",
+            "doc": "The aggregation level used in the item primary hierarchy."
+        },
+        {
+            "name": "supplyChainUuid",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid",
+                "doc": "Uuid to identify the event inside supply chain."
+            }
+        },
+        {
+            "name": "sourceUuid",
+            "type": {
+                "type": "string",
+                "logicalType": "uuid",
+                "doc": "Uuid to identify the event on source system."
+            }
+        },
+        {
+            "name": "creationDateTime",
+            "type": {
+                "type": "long",
+                "logicalType": "timestamp-millis",
+                "doc": "Date and time indicating time of event creation at source."
+            }
+        },
+        {
+            "name": "statusCode",
+            "type": "string",
+            "doc": "Indicates if the event is an original or an update."
+        },
+        {
+            "name": "actionCode",
+            "type": [
+                "null",
+                {
+                    "type": "enum",
+                    "name": "ActionCodeType",
+                    "symbols": [
+                        "ADD",
+                        "UPDATE",
+                        "DELETE"
+                    ]
+                }
+            ],
+            "doc": "Code specifying the action to be taken in the system of the recipient."
+        },
+        {
+            "name": "lastUpdateDateTime",
+            "type": ["null", {
+                "type": "long",
+                "logicalType": "timestamp-millis",
+                "doc": "Date and time indicating time of event update."
+            }]
+        },
+        {
+            "name": "itemLevelId",
+            "type": [
+                "null",
+                "string"
+            ],
+            "doc": "The level of the product or TradeItem."
+        },
+        {
+            "name": "demandChannel",
+            "type": "string",
+            "doc": "Defines the specific means of customer engagement that will require individual evaluation of demand patterns and item consumption."
+        },
+        {
+            "name": "locationId",
+            "type": "string",
+            "doc": "If location dimension values are aggregated, this identifies the aggregation level used in the location primary hierarchy."
+        },
+        {
+            "name": "locationLevelId",
+            "type": [
+                "null",
+                "string"
+            ],
+            "doc": "The level of the location."
+        },
+        {
+            "name": "priceEffectiveStartDate",
+            "type": {
+                "type": "int",
+                "logicalType": "date",
+                "doc": "The first Date when Price will be effective at Retail."
+            }
+        },
+        {
+            "name": "priceEffectiveEndDate",
+            "type": ["null", {
+                "type": "int",
+                "logicalType": "date",
+                "doc": "Price 'Valid to' Date , i,e Last date of Valid retail price."
+            }]
+        },
+        {
+            "name": "retailPrice",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "RetailPriceType",
+                    "doc": "Type defined for geographical coordinates to identify the location.",
+                    "fields": [
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "doc": "The identifier for a specific unit of measure to which a quantity is being converted."
+                        },
+                        {
+                            "name": "value",
+                            "type": {
+                                "type": "bytes",
+                                "doc": "The amount of money.",
+                                "logicalType": "decimal",
+                                "precision": 18,
+                                "scale": 2
+                            }
+                        }
+                    ]
+                }
+            ],
+            "doc": "Retail Price is to be used as the Effective Price."
+        },
+        {
+            "name": "retailPriceWithTaxes",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "RetailPriceWithTaxesType",
+                    "doc": "Type defined for geographical coordinates to identify the location.",
+                    "fields": [
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "doc": "The identifier for a specific unit of measure to which a quantity is being converted."
+                        },
+                        {
+                            "name": "value",
+                            "type": {
+                                "type": "bytes",
+                                "doc": "The amount of money.",
+                                "logicalType": "decimal",
+                                "precision": 18,
+                                "scale": 2
+                            }
+                        }
+                    ]
+                }
+            ],
+            "doc": "Price at which Customer Buys the product."
+        },
+        {
+            "name": "taxPercentage",
+            "type": [
+                "null",
+                "float"
+            ],
+            "doc": "Tax percentage applied on Price of Items"
+        },
+        {
+            "name": "depositAmount",
+            "type": [
+                "null",
+                {
+                    "type": "record",
+                    "name": "DepositAmountType",
+                    "doc": "Type defined for geographical coordinates to identify the location.",
+                    "fields": [
+                        {
+                            "name": "currencyCode",
+                            "type": "string",
+                            "doc": "The identifier for a specific unit of measure to which a quantity is being converted."
+                        },
+                        {
+                            "name": "value",
+                            "type": {
+                                "type": "bytes",
+                                "doc": "The amount of money.",
+                                "logicalType": "decimal",
+                                "precision": 18,
+                                "scale": 2
+                            }
+                        }
+                    ]
+                }
+            ],
+            "doc": "Amount deposited upfront in Local currency."
+        },
+        {
+            "name": "priceType",
+            "type": [
+                "null",
+                {
+                    "type": "enum",
+                    "name": "PriceTypeEnumType",
+                    "symbols": [
+                        "NORMAL",
+                        "PURCHASE",
+                        "REDUCED"
+                    ]
+                }
+            ],
+            "doc": "Normal, Purchased or Reduced."
+        }
+    ]
+}

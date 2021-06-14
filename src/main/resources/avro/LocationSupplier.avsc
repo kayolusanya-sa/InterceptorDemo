@@ -1,0 +1,348 @@
+{
+  "type": "record",
+  "name": "LocationSupplier",
+  "namespace": "uk.co.sainsburys.supplychain.integrationservices.model.generated.location.supplier",
+  "doc": "Schema for supplier location sub entity.",
+  "fields": [
+    {
+      "name": "locationId",
+      "type": "string",
+      "doc": "Identification of the location."
+    },
+    {
+      "name": "supplyChainUuid",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Uuid to identify the event inside supply chain."
+    },
+    {
+      "name": "sourceUuid",
+      "type": {
+        "type": "string",
+        "logicalType": "uuid"
+      },
+      "doc": "Uuid to identify the event on source system."
+    },
+    {
+      "name": "creationDateTime",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "Date and time indicating time of event creation at source."
+    },
+    {
+      "name": "statusCode",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "StatusCodeEnumType",
+          "symbols": [
+            "COPY",
+            "ORIGINAL",
+            "ADDITIONAL_TRANSMISSION"
+          ],
+          "default": "ORIGINAL"
+        }
+      ],
+      "doc": "Indicates if the event is an original or an update.",
+      "default": null
+    },
+    {
+      "name": "actionCode",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "name": "ActionCodeEnumType",
+          "symbols": [
+            "ADD",
+            "CHANGE_BY_REFRESH",
+            "DELETE"
+          ],
+          "default": "CHANGE_BY_REFRESH"
+        }
+      ],
+      "doc": "Code specifying the action to be taken in the system of the recipient.",
+      "default": null
+    },
+    {
+      "name": "lastUpdateDateTime",
+      "type": [
+        "null",
+        {
+          "type": "long",
+          "logicalType": "timestamp-millis"
+        }
+      ],
+      "doc": "Date and time indicating time of event update.",
+      "default": null
+    },
+    {
+      "name": "parentRole",
+      "type": "string",
+      "doc": "The role of the parent party from the point of view of the Enterprise - Supplier Or Customer.",
+      "default": "SUPPLIER"
+    },
+    {
+      "name": "basicLocation",
+      "type": {
+        "type": "record",
+        "name": "BasicLocationType",
+        "doc": "Type defined for base information needed for physical locations.",
+        "fields": [
+          {
+            "name": "locationName",
+            "type": "string",
+            "doc": "The user friendly name of the location."
+          },
+          {
+            "name": "description",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "A description for this physical location.",
+            "default": null
+          },
+          {
+            "name": "locationTypeCode",
+            "type": "string",
+            "doc": "Physical type of location, such as warehouse, supplier or store.",
+            "default": "SUPPLIER"
+          },
+          {
+            "name": "address",
+            "type": [
+              "null",
+              {
+                "type": "record",
+                "name": "AddressType",
+                "doc": "Type defined for the location at which a particular organization or person may be found or reached.",
+                "fields": [
+                  {
+                    "name": "name",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "streetAddressOne",
+                    "type": "string"
+                  },
+                  {
+                    "name": "streetAddressTwo",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "streetAddressThree",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "crossStreet",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "city",
+                    "type": "string"
+                  },
+                  {
+                    "name": "cityCode",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "pOBoxNumber",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "postalCode",
+                    "type": "string"
+                  },
+                  {
+                    "name": "countyCode",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "provinceCode",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "state",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "countryName",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "countryCode",
+                    "type": "string"
+                  },
+                  {
+                    "name": "currencyCode",
+                    "type": "string"
+                  },
+                  {
+                    "name": "languageCode",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "geographicalCoordinates",
+                    "type": [
+                      "null",
+                      {
+                        "type": "record",
+                        "name": "GeographicalCoordinatesType",
+                        "doc": "Type defined for geographical coordinates to identify the location.",
+                        "fields": [
+                          {
+                            "name": "latitude",
+                            "type": "string",
+                            "doc": "Angular distance North or South from the earth's equator measured through 90 degrees."
+                          },
+                          {
+                            "name": "longitude",
+                            "type": "string",
+                            "doc": "The arc or portion of the earth's equator intersected between the meridian of a given place and the prime meridian and expressed either in degrees or in time."
+                          }
+                        ]
+                      }
+                    ],
+                    "doc": "Geographical coordinates to identify the location.",
+                    "default": null
+                  }
+                ]
+              }
+            ],
+            "doc": "The location at which a particular organization or person may be found or reached.",
+            "default": null
+          }
+        ]
+      },
+      "doc": "Base information needed for physical locations."
+    },
+    {
+      "name": "additionalFields",
+      "type": {
+        "type": "record",
+        "name": "AdditionalFieldsType",
+        "doc": "Type defined for additional fields from source.",
+        "fields": [
+          {
+            "name": "supplierCode",
+            "type": "string",
+            "doc": "It's a unique representation of a supplier, formed by alphabets and number, maintained in Financial system."
+          },
+          {
+            "name": "supplierNumber",
+            "type": "int",
+            "doc": "Supplier number that holds numeric form of the Supplier code, maintained in Financial system."
+          },
+          {
+            "name": "startDate",
+            "type": {
+              "type": "int",
+              "logicalType": "date"
+            },
+            "doc": "Start date from which a supplier will be made active in the system, maintained in Financial system."
+          },
+          {
+            "name": "endDate",
+            "type": [
+              "null",
+              {
+                "type": "int",
+                "logicalType": "date"
+              }
+            ],
+            "doc": "End date after when a supplier will be made inactive in the system, maintained in Financial system.",
+            "default": null
+          },
+          {
+            "name": "supplierStatus",
+            "type": "string",
+            "doc": "Status of a supplier based on supplier end date, maintained in Oracle Financial system."
+          },
+          {
+            "name": "vATNumber",
+            "type": "int",
+            "doc": "VAT number applicable for supplier."
+          },
+          {
+            "name": "sMDGroupId",
+            "type": "int",
+            "doc": "Legacy Supplier Master data group id."
+          },
+          {
+            "name": "sMDGroupName",
+            "type": "string",
+            "doc": "Legacy Supplier Master data group name."
+          },
+          {
+            "name": "vendorId",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Vendor ID for Supplier sites, not applicable for Warehouse/Store locations.",
+            "default": null
+          },
+          {
+            "name": "cust",
+            "type": [
+              "null",
+              "string"
+            ],
+            "doc": "Customers part of Business to Business(B2B) sales, not Business to Consumer(B2C) sales.",
+            "default": null
+          }
+        ]
+      }
+    }
+  ]
+}
