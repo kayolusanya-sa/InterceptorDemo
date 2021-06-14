@@ -12,18 +12,23 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class ACLConsumerInterceptor <K, V> implements ConsumerInterceptor<String, LocationSupplierSource>{
+public class ACLConsumerInterceptor <K, V> implements ConsumerInterceptor<String, Object>{
+
+    private static final String LOCATION_SUPPLIER_SOURCE = "dataOut";
 
     public void configure(final Map<String, ?> configs) {
         final Map<String, Object> copyConfigs = (Map<String, Object>) configs;
     }
 
-    public ConsumerRecords<String, LocationSupplierSource> onConsume(ConsumerRecords<String, LocationSupplierSource> records) {
-        for (TopicPartition partition : records.partitions()) {
-            List<ConsumerRecord<String, LocationSupplierSource>> recordsInPartition = records.records(partition);
-            for (ConsumerRecord<String, LocationSupplierSource> record : recordsInPartition) {
-                    System.out.println("onConsume:");
-                    System.out.println(record.value());
+    @Override
+    public ConsumerRecords<String, Object> onConsume(ConsumerRecords<String, Object> records) {
+        log.info("---<< ProducerRecord being received {} >>---", records);
+        for (ConsumerRecord<String, Object> record : records) {
+            if (record.topic().equals(LOCATION_SUPPLIER_SOURCE)) {
+                log.info("---<< setting timestamp for  >>---");
+                String key = record.key();
+                System.out.printf("Received Message: timestamp =%s, partition =%s, offset = %d, key = %s, value = %s\n",
+                        record.timestamp(), record.partition(), record.offset(), record.key(), record.value().getClass().getName());
             }
         }
         return records;
